@@ -1,0 +1,20 @@
+di doc gerate has variable nya ini :
+currencyiso3a = GBP
+mainamount = 100.00
+sitereference = test_site12345
+sitesecuritytimestamp = 2019-05-28 14:22:37
+password = PASSWORD
+
+di web pa ka :
+let result = currencyiso3a.concat(mainamount, settleduedate, settlestatus, sitereference, stprofile, version, ruleidentifier, orderreference, sitesecuritytimestamp, password);
+
+flutter url :
+https://payments.securetrading.net/process/payments/choice?currencyiso3a=GBP&mainamount=57.35&settleduedate=2023-05-10&settlestatus=2&sitereference=test_paymentbutlerltd103652&stprofile=default&version=2&ruleidentifier=STR-6&successfulurlredirect=http%3A%2F%2Flocalhost%3A8000%2Ftrustpayment%2Fsuccessful&ruleidentifier=STR-7&declinedurlredirect=http%3A%2F%2Flocalhost%3A8000%2Ftrustpayment%2Fdeclined&ruleidentifier=STR-13&errorurlredirect=http%3A%2F%2Flocalhost%3A8000%2Ftrustpayment%2Ferror&orderreference=183&sitesecurity=h95caa0aff835106a0bf29fb523d1466827c6866ee9168aeb40645903aeee53fe&sitesecuritytimestamp=2023-05-10+20%3A02%3A34
+
+result : error pas selesai confirm data card
+
+web url :
+https://payments.securetrading.net/process/payments/choice?currencyiso3a=GBP&mainamount=57.35&settleduedate=2023-05-10&settlestatus=2&sitereference=test_paymentbutlerltd103652&stprofile=default&version=2&ruleidentifier=STR-6&successfulurlredirect=https%3A%2F%2Fi-order.co.uk%2Ftrustpayment%2Fsuccessful&ruleidentifier=STR-7&declinedurlredirect=https%3A%2F%2Fi-order.co.uk%2Ftrustpayment%2Fdeclined&ruleidentifier=STR-13&errorurlredirect=https%3A%2F%2Fi-order.co.uk%2Ftrustpayment%2Ferror&orderreference=183&sitesecurity=h95caa0aff835106a0bf29fb523d1466827c6866ee9168aeb40645903aeee53fe&sitesecuritytimestamp=2023-05-10+20%3A02%3A34
+
+
+result : berhasil pas selesai confirm data card

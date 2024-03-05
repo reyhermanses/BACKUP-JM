@@ -1,0 +1,81 @@
+PORT= 8080
+
+# DEV
+#  NODE_ENV= 'dev'
+#  DB_NAME= 'data_aggregator'
+#  DB_HOST= '10.1.12.45'
+#  DB_USERNAME= 'postgres'
+#  DB_PASSWORD= 'postgres'
+#  DB_DIALECT= 'postgres'
+
+# TEST_DEV
+ NODE_ENV= 'new_dev'
+ DB_NAME= 'data_aggregator'
+ DB_HOST= '10.1.12.45'
+ DB_USERNAME= 'postgres'
+ DB_PASSWORD= '@kuk@muk1t@2023!'
+ DB_DIALECT= 'postgres'
+
+# DEV UAT
+# ENV= 'dev_uat'
+# DB_NAME= 'data_aggregator'
+# DB_HOST= '10.1.12.45'
+# DB_USERNAME= 'postgres'
+# DB_PASSWORD= '@kuk@muk1t@2023!'
+# DB_DIALECT= 'postgres'
+
+
+# # PROD
+#  NODE_ENV= 'public'
+#  DB_NAME= 'data_aggregator'
+#  DB_HOST= '10.1.12.30'
+#  DB_USERNAME= 'data_aggregator'
+#  DB_PASSWORD= 'dataaggregator2023'
+#  DB_DIALECT= 'postgres'
+
+# PROD
+#  NODE_ENV= 'public'
+#  DB_NAME= 'data_aggregator_2'
+#  DB_HOST= '10.1.12.30'
+#  DB_USERNAME= 'aggregator'
+#  DB_PASSWORD= 'mypass'
+#  DB_DIALECT= 'postgres'
+
+# NEW_DEV
+# NODE_ENV= 'new_dev'
+# DB_NAME= 'data_aggregator'
+# DB_HOST= '10.1.12.45'
+# DB_USERNAME= 'postgres'
+# DB_PASSWORD= '@kuk@muk1t@2023!'
+# DB_DIALECT= 'postgres'
+
+API_KEY= '1d7db982-a690-47d2-a052-9daf249adb43'
+TOKEN_SECRET= 'super_seekret_key'
+NODE_TLS_REJECT_UNAUTHORIZED = "0"
+SAP_URL= 'http://erpappprd.jasamarga.co.id:8001/sap/h2h/hcm'
+SAP_USER= 'equine04'
+SAP_PASSWORD= 'Welcome.123'
+
+# JM CLICK
+NODE_ENV_JMCLICK='jm_click'
+DB_JMCLICK_HOST= '10.14.3.43'
+DB_JMCLICK_USERNAME= 'postgres'
+DB_JMCLICK_PASSWORD= 'Ju$tK33pIt'
+DB_JMCLICK_NAME='jmclick'
+
+# MINIO
+MINIO_PORT= 81
+MINIO_URL= '10.14.3.100'
+MINIO_ACCESS_KEY= 'aggregator-data-dev'
+MINIO_SECRET_KEY= 'aggregator-data-dev'
+MINIO_BUCKET= 'aggregator-data-dev'
+
+# REDIS
+REDIS_HOST= 10.1.3.238
+REDIS_PASS= passredisyaini
+
+# DEFAULT VAR
+DEFAULT_PASSWORD= 'j4s4m4rg4!'
+
+# REFRESH TOKEN
+REFRESH_TOKEN_SECRET= uhuy

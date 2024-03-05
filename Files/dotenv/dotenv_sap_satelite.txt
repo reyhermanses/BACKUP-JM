@@ -1,0 +1,16 @@
+PORT= '8080'
+
+NODE_ENV= public
+
+DB_NAME= sap_satellite
+DB_DIALECT= postgres
+DB_HOST= 10.1.12.45
+DB_USERNAME= postgres
+DB_PASSWORD= '@kuk@muk1t@2023!'
+
+SAP_USER= equine04
+SAP_URL= 'http://erpappprd.jasamarga.co.id:8001/sap/h2h/hcm'
+SAP_PASSWORD= Welcome.123
+
+AGGREGATOR_URL= 'https://api-karyawan.jasamarga.co.id'
+AGG_API_KEY= 0fafe9fb-aa76-4297-92cd-b8604ea6b592

@@ -1,0 +1,16 @@
+select npp, START_DATE , END_DATE ,
+(to_date('2022-05-31', 'YYYY-MM-DD')-to_date('2022-03-31', 'YYYY-MM-DD')),
+extract(day from end_date - start_date) AS d
+from "DATA_AGGREGATOR_CLONE"."EMPLOYEE_POSITION"
+where "NPP" = '10691'
+AND extract(year from start_date) = 2020
+--AND START_DATE BETWEEN  to_date('2020-09-01', 'YYYY-MM-DD') AND to_date('2020-09-30', 'YYYY-MM-DD')
+AND extract(day from end_date - start_date) >= 30[
+
+
+
+select npp, START_DATE , END_DATE 
+from "DATA_AGGREGATOR_CLONE"."EMPLOYEE_POSITION"
+where "NPP" = '10691'
+AND START_DATE BETWEEN  to_date('2020-09-01', 'YYYY-MM-DD') AND to_date('2020-09-30', 'YYYY-MM-DD')
+AND END_DATE BETWEEN  ADD_MONTHS(to_date('2020-09-01', 'YYYY-MM-DD'), 1) AND ADD_MONTHS(to_date('2020-09-30', 'YYYY-MM-DD'), 1) 

@@ -1,0 +1,15 @@
+PORT=8080
+DB_HOST=10.1.12.30
+DB_NAME=sap_satellite
+DB_USERNAME=aggregator
+DB_PASSWORD=mypass
+DB_SCHEMA=public
+SECRET_KEY=Sem0gaB3RK4HKaliyee
+
+
+
+# AGGREGATOR_API=http://aggregator-postgres-v3-aggregator-postgres-v3.apps.ocprd.jasamarga.co.id
+AGGREGATOR_API=
+# CRON_HOST_URL=http://aggregator-cron-v3-aggregator-postgres-v3.apps.ocprd.jasamarga.co.id
+CRON_HOST_URL=http://localhost:8181
+CRON_API_KEY=0fafe9fb-aa76-4297-92cd-b8604ea6b592

@@ -1,0 +1,15 @@
+tutorial docker
+
+https://www.digitalocean.com/community/tutorials/how-to-set-up-laravel-nginx-and-mysql-with-docker-compose-on-ubuntu-20-04
+
+access container db :
+docker exec -it image_name bash
+
+firewal ufd
+https://www.niagahoster.co.id/blog/konfigurasi-awal-vps-ubuntu-16-04/
+
+mysql
+https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04
+
+
+https://towardsdatascience.com/connect-to-mysql-running-in-docker-container-from-a-local-machine-6d996c574e55

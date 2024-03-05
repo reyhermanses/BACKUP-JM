@@ -1,0 +1,11 @@
+vps tutorial
+
+first-step
+1. do-release-upgrade
+2. do update
+3. do dist-update (download 400mb)
+5. reboot
+6. open putty
+7. login kembali
+change user & pass
+8.

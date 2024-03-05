@@ -1,0 +1,25 @@
+PORT= '8080'
+
+NODE_ENV= 'public'
+DB_SCHEMA= 'public'
+DB_DIALECT= 'postgres'
+DB_HOST= '10.1.12.30'
+DB_NAME= 'data_aggregator_2'
+DB_USERNAME= 'aggregator'
+DB_PASSWORD= 'mypass'
+
+# NODE_ENV= 'new_dev'
+# DB_SCHEMA= 'new_dev'
+# DB_DIALECT= 'postgres'
+# DB_HOST= '10.1.12.45'
+# DB_NAME= 'data_aggregator'
+# DB_USERNAME= 'postgres'
+# DB_PASSWORD= '@kuk@muk1t@2023!'
+
+EMAIL_HOST= no-reply@jasamarga.co.id
+FE_URL= 'http=//reset-password-frontend-reset-password.apps.ocdev.jasamarga.co.id/'
+EMAIL_PASSWORD= Welcome2023!
+
+X_API_KEY =b059af81-7466-430c-aa2f-848100ad551d
+AGG_URL =https://api-karyawan.jasamarga.co.id/api/v1/auth/login
+TOKEN_SECRET=super_seekret_key

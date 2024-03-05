@@ -1,0 +1,796 @@
+const upsertDataPekerjaan = async (s, i, transaction) => {
+  let collection = {};
+  collection["NPP"] = s["NPP"];
+  collection["Jabatan ID"] = s["Jabatan ID"];
+  collection["Nama"] = s["Nama"];
+  collection["KD Comp ID"] = s["KD Comp ID"];
+  collection["No. SK Jabatan"] = s["No. SK Jabatan"];
+  collection["Tanggal SK Jabatan"] = moment(
+    excelSerialNumberToDate(s["Tanggal SK Jabatan"])
+  ).format("YYYY-MM-DD");
+  collection["Tanggal TMT"] = moment(
+    excelSerialNumberToDate(s["Tanggal TMT"])
+  ).format("YYYY-MM-DD");
+  collection["Employee Group ID"] = s["Employee Group ID"];
+  collection["Opsi"] = s["Opsi"];
+  collection["Sheet Name"] = "Data Pekerjaan";
+
+  console.log(typeof collection["Jabatan ID"]);
+  console.log(typeof collection["KD Comp ID"]);
+  console.log(typeof collection["Employee Group ID"]);
+  console.log(typeof collection["No. SK Jabatan"]);
+
+  const checkIfDataIsNumber =
+    (await validDataIsNumber(collection["Jabatan ID"])) &&
+    (await validDataIsNumber(collection["KD Comp ID"])) &&
+    (await validDataIsNumber(collection["Employee Group ID"]));
+
+  const checkIfDate =
+    (await validDataIsDate(collection["Tanggal SK Jabatan"])) &&
+    (await validDataIsDate(collection["Tanggal TMT"]));
+
+  const checkIfUndefined =
+    (await validDataIsUndefined(collection["Jabatan ID"])) &&
+    (await validDataIsUndefined(collection["KD Comp ID"])) &&
+    (await validDataIsUndefined(collection["Employee Group ID"])) &&
+    (await validDataIsUndefined(collection["No. SK Jabatan"]));
+
+  // console.log(checkIfUndefined);
+
+  if (!checkIfDataIsNumber) {
+    collection["Status"] = "Gagal";
+    collection["Keterangan"] =
+      "Pastikan semua ID dan Nomor bertipe angka harus sesuai";
+  } else if (!checkIfDate) {
+    collection["Status"] = "Gagal";
+    collection["Keterangan"] =
+      "Pastikan semua data bertipe tanggal harus sesuai";
+  } else if (checkIfUndefined) {
+    collection["Status"] = "Gagal";
+    collection["Keterangan"] = "Pastikan semua data mandatory tidak kosong";
+  } else {
+    const repomasterposition = await repositoryMasterPosition.acquireById(
+      s["Jabatan ID"]
+    );
+    const repomastercompany = await repositoryMasterCompany.acquireById(
+      s["KD Comp ID"]
+    );
+    const repomasteremployeegroup =
+      await repositoryMasterEmployeeGroup.acquireById(s["Employee Group ID"]);
+    if (repomasteremployeegroup && repomastercompany && repomasterposition) {
+      if (repomasterposition.company_id === s["KD Comp ID"]) {
+        const checkIfJabatanExist =
+          await repositoryEmployeePosition.acquireByPositionId(
+            collection["Jabatan ID"]
+          );
+
+        if (checkIfJabatanExist) {
+          collection["Status"] = "Gagal";
+          collection["Keterangan"] = "Pastikan jabatan masi tersedia";
+        } else {
+          if (s["Opsi"] === "Initial Data") {
+            //create a new employee
+            const responseemployeeposition =
+              await repositoryEmployeePosition.acquireByNppPositionId(
+                s["NPP"],
+                s["Jabatan ID"]
+              );
+            var createemployeemasal = {
+              name: s["Nama"],
+              npp: s["NPP"],
+              is_pusat: false,
+              employee_status: true,
+              sk_position_no: collection["No. SK Jabatan"],
+              sk_position_date: collection["Tanggal SK Jabatan"],
+              start_date: collection["Tanggal TMT"],
+              end_date: moment(Date.now()).format("YYYY-MM-DD"),
+              position_id: collection["Jabatan ID"],
+              company_id_asal: collection["KD Comp ID"],
+              employee_group_id: collection["Employee Group ID"],
+              date_of_entry: moment(Date.now()).format("YYYY-MM-DD"),
+              created_by: "mass-upload",
+            };
+            console.log(createemployeemasal);
+            const responsecreate = await createData(createemployeemasal);
+            if (!responsecreate) {
+              collection["status"] = "Gagal";
+              collection["Keterangan"] = "Data karyawan gagal dibuat";
+            } else {
+              collection["status"] = "Sukses";
+              collection["Keterangan"] = "Data karyawan berhasil dibuat";
+            }
+            // if (!responseemployeeposition) {
+            //   const responsecreateemployeemasal = await repository.generate(
+            //     createemployeemasal
+            //   );
+            //   var createemployeepositionmasal = {
+            //     employee_id: responsecreateemployeemasal.id,
+            //     npp: s["NPP"],
+            //     position_id: s["Jabatan ID"],
+            //     created_by: "mass-upload",
+            //     personnel_number: s["NPP"],
+            //     action: s["Opsi"],
+            //     is_main: true,
+            //   };
+            //   if (responsecreateemployeemasal) {
+            //     const responsecreateemployeepositionmasal =
+            //       await repositoryEmployeePosition.generate(
+            //         createemployeepositionmasal
+            //       );
+            //     if (responsecreateemployeepositionmasal) {
+            //       var updatemasterposition = {
+            //         sk_position_no: s["No. SK Jabatan"],
+            //         sk_position_date: moment(
+            //           excelSerialNumberToDate(s["Tanggal SK Jabatan"])
+            //         ).format("YYYY-MM-DD"),
+            //         start_date: moment(
+            //           excelSerialNumberToDate(s["Tanggal TMT"])
+            //         ).format("YYYY-MM-DD"),
+            //         created_by: "mass-upload",
+            //       };
+            //       const responseupdatemasterposition =
+            //         await repositoryMasterPosition.updateMasalByPositionId(
+            //           responsecreateemployeepositionmasal.position_id,
+            //           updatemasterposition
+            //         );
+            //       if (responseupdatemasterposition) {
+            //         const company = await acquireCompById(s["KD Comp ID"]);
+            //         const nppAP = `${company.nm_singkatan}${s["NPP"]}`;
+            //         await upsertAuth({
+            //           employee_id: responsecreateemployeemasal.id,
+            //           username: nppAP,
+            //           password: bcrypt.hashSync("Welcome123!", 12),
+            //           is_ldap: false,
+            //         });
+            //         collection["Status"] = "Sukses";
+            //         collection["Keterangan"] =
+            //           "Data Pekerjaan berhasil disimpan";
+            //       } else {
+            //         collection["Status"] = "Gagal";
+            //         collection["Keterangan"] =
+            //           "Data Pekerjaan gagal disimpan di table master position ";
+            //       }
+            //     } else {
+            //       collection["Status"] = "Gagal";
+            //       collection["Keterangan"] = "Data karaywan belum dibuat ";
+            //     }
+            //   } else {
+            //     collection["Status"] = "Gagal";
+            //     collection["Keterangan"] = "Data karaywan belum dibuat";
+            //   }
+            // } else {
+            //   collection["Status"] = "Gagal";
+            //   collection["Keterangan"] = "Data Pekerjaan sudah terdaftar";
+            // }
+          } else if (s["Opsi"] === "Ubah") {
+            //update data employee
+
+            const responseemployee =
+              await repositoryemployee.acquireDataByNppKDComp(
+                s["NPP"],
+                s["KD Comp ID"]
+              );
+            if (responseemployee) {
+              var employee_id = responseemployee.id;
+              const responsemastereployeegroup =
+                await repositoryMasterEmployeeGroup.acquireById(
+                  s["Employee Group ID"]
+                );
+              if (responsemastereployeegroup) {
+                var updateemployeemasal = {
+                  name: s["Nama"],
+                  company_id_asal: s["KD Comp ID"],
+                  employee_group_id: s["Employee Group ID"],
+                  is_pusat: false,
+                  employee_status: true,
+                  updated_by: "update-masal",
+                };
+                // const responseupsertemployeemasal = await repository.upsertMasal(responseemployeeposition ? responseemployeeposition.employee_id : 0, upsertemployeemasal)
+                const responsecreateemployeemasal = await repository.modernize(
+                  employee_id,
+                  updateemployeemasal
+                );
+                if (responsecreateemployeemasal) {
+                  var createemployeepositionmasal = {
+                    npp: s["NPP"],
+                    position_id: s["Jabatan ID"],
+                    personnel_number: s["NPP"],
+                    action: s["Opsi"],
+                    updated_by: "mass-upload",
+                  };
+                  const responseemployeepositionmasal =
+                    await repositoryEmployeePosition.updateMasalByEmployeeId(
+                      employee_id,
+                      createemployeepositionmasal
+                    );
+                  if (responseemployeepositionmasal) {
+                    var createmasterposition = {
+                      sk_position_no: s["No. SK Jabatan"],
+                      sk_position_date: moment(
+                        excelSerialNumberToDate(s["Tanggal SK Jabatan"])
+                      ).format("YYYY-MM-DD"),
+                      start_date: moment(
+                        excelSerialNumberToDate(s["Tanggal TMT"])
+                      ).format("YYYY-MM-DD"),
+                      updated_by: "mass-upload",
+                    };
+                    const responsecreatemasterposition =
+                      await repositoryMasterPosition.updateMasalByPositionId(
+                        s["Jabatan ID"],
+                        createmasterposition
+                      );
+                    if (responsecreatemasterposition) {
+                      collection["Status"] = "Sukses";
+                      collection[
+                        "Keterangan"
+                      ] = `Data pekerjaan berhasil di ubah`;
+                    } else {
+                      collection["Status"] = "Gagal";
+                      collection[
+                        "Keterangan"
+                      ] = `Data pekerjaan tidak bisa di ubah, cek kembali kolom master position`;
+                    }
+                  } else {
+                    collection["Status"] = "Gagal";
+                    collection[
+                      "Keterangan"
+                    ] = `Data pekerjaan tidak bisa di ubah, cek kembali kolom employee position`;
+                  }
+                } else {
+                  collection["Status"] = "Gagal";
+                  collection["Keterangan"] =
+                    "Data pekerjaan tidak bisa di ubah, cek kembali kolom employee";
+                }
+              } else {
+                collection["Status"] = "Gagal";
+                collection["Keterangan"] = `Data karaywan belum dibuat`;
+              }
+            } else {
+              collection["Status"] = "Gagal";
+              collection[
+                "Keterangan"
+              ] = `Data pekerjaan tidak tersimpan karena ${
+                !responsemastereployeegroup
+                  ? `Employee Group ID [${s["Employee Group ID"]}] tidak terdaftar`
+                  : ""
+              } ${
+                !responseemployee
+                  ? `KD Comp ID [${s["KD Comp ID"]}] tidak terdaftar`
+                  : ""
+              }`;
+            }
+          } else if (s["Opsi"] === "Rotasi") {
+            const responseemployee =
+              await repositoryemployee.acquireDataByNppKDComp(
+                s["NPP"],
+                s["KD Comp ID"]
+              );
+            const responsemastereployeegroup =
+              await repositoryMasterEmployeeGroup.acquireById(
+                s["Employee Group ID"]
+              );
+            if (responseemployee && responsemastereployeegroup) {
+              var generateMobility = {
+                employee_id: responseemployee.id,
+                no_sk: s["No. SK Jabatan"],
+                tanggal_sk: moment(
+                  excelSerialNumberToDate(s["Tanggal SK Jabatan"])
+                ).format("YYYY-MM-DD"),
+                start_date: moment(
+                  excelSerialNumberToDate(s["Tanggal TMT"])
+                ).format("YYYY-MM-DD"),
+                position_id: parseInt(s["Jabatan ID"]),
+                // 'subgroup_id': ,
+              };
+              var responseservicemobility =
+                await serviceMobility.generatePromosiRotasiDemosiData(
+                  generateMobility,
+                  "JM_CLICK",
+                  "rotasi",
+                  transaction
+                );
+              if (responseservicemobility) {
+                collection["Status"] = "Sukses";
+                collection[
+                  "Keterangan"
+                ] = `Data pekerjaan untuk rotasi berhasil diproses`;
+              } else {
+                collection["Status"] = "Gagal";
+                collection[
+                  "Keterangan"
+                ] = `Data pekerjaan untuk rotasi tidak berhasil diproses`;
+              }
+            } else {
+              collection["Status"] = "Gagal";
+              collection[
+                "Keterangan"
+              ] = `Data pekerjaan rotasi tidak tersimpan karena ${
+                !responsemastereployeegroup
+                  ? `Employee Group ID [${s["Employee Group ID"]}] tidak terdaftar`
+                  : ""
+              } ${
+                !responseemployee
+                  ? `KD Comp ID [${s["KD Comp ID"]}] atau [${s["NPP"]}]  tidak terdaftar`
+                  : ""
+              }`;
+            }
+          } else if (s["Opsi"] === "Promosi") {
+            const responseemployee =
+              await repositoryemployee.acquireDataByNppKDComp(
+                s["NPP"],
+                s["KD Comp ID"]
+              );
+            const responsemastereployeegroup =
+              await repositoryMasterEmployeeGroup.acquireById(
+                s["Employee Group ID"]
+              );
+            if (responseemployee && responsemastereployeegroup) {
+              var generateMobility = {
+                employee_id: responseemployee.id,
+                no_sk: s["No. SK Jabatan"],
+                tanggal_sk: moment(
+                  excelSerialNumberToDate(s["Tanggal SK Jabatan"])
+                ).format("YYYY-MM-DD"),
+                start_date: moment(
+                  excelSerialNumberToDate(s["Tanggal TMT"])
+                ).format("YYYY-MM-DD"),
+                position_id: parseInt(s["Jabatan ID"]),
+                // 'subgroup_id': ,
+              };
+              var responseservicemobility =
+                await serviceMobility.generatePromosiRotasiDemosiData(
+                  generateMobility,
+                  "JM_CLICK",
+                  "promosi",
+                  transaction
+                );
+              if (responseservicemobility) {
+                collection["Status"] = "Sukses";
+                collection[
+                  "Keterangan"
+                ] = `Data pekerjaan untuk promosi berhasil diproses`;
+              } else {
+                collection["Status"] = "Gagal";
+                collection[
+                  "Keterangan"
+                ] = `Data pekerjaan untuk promosi tidak berhasil diproses`;
+              }
+            } else {
+              collection["Status"] = "Gagal";
+              collection[
+                "Keterangan"
+              ] = `Data pekerjaan promosi tidak tersimpan karena ${
+                !responsemastereployeegroup
+                  ? `Employee Group ID [${s["Employee Group ID"]}] tidak terdaftar`
+                  : ""
+              } ${
+                !responseemployee
+                  ? `KD Comp ID [${s["KD Comp ID"]}] atau [${s["NPP"]}]  tidak terdaftar untuk row data ini`
+                  : ""
+              }`;
+            }
+          } else if (s["Opsi"] === "Demosi") {
+            const responseemployee =
+              await repositoryemployee.acquireDataByNppKDComp(
+                s["NPP"],
+                s["KD Comp ID"]
+              );
+            const responsemastereployeegroup =
+              await repositoryMasterEmployeeGroup.acquireById(
+                s["Employee Group ID"]
+              );
+            if (responseemployee && responsemastereployeegroup) {
+              var generateMobility = {
+                employee_id: responseemployee.id,
+                no_sk: s["No. SK Jabatan"],
+                tanggal_sk: moment(
+                  excelSerialNumberToDate(s["Tanggal SK Jabatan"])
+                ).format("YYYY-MM-DD"),
+                start_date: moment(
+                  excelSerialNumberToDate(s["Tanggal TMT"])
+                ).format("YYYY-MM-DD"),
+                position_id: parseInt(s["Jabatan ID"]),
+                // 'subgroup_id': ,
+              };
+              var responseservicemobility =
+                await serviceMobility.generatePromosiRotasiDemosiData(
+                  generateMobility,
+                  "JM_CLICK",
+                  "demosi",
+                  transaction
+                );
+              if (responseservicemobility) {
+                collection["Status"] = "Sukses";
+                collection[
+                  "Keterangan"
+                ] = `Data pekerjaan untuk demosi berhasil diproses`;
+              } else {
+                collection["Status"] = "Gagal";
+                collection[
+                  "Keterangan"
+                ] = `Data pekerjaan untuk demosi tidak berhasil diproses`;
+              }
+            } else {
+              collection["Status"] = "Gagal";
+              collection[
+                "Keterangan"
+              ] = `Data pekerjaan demosi tidak tersimpan karena ${
+                !responsemastereployeegroup
+                  ? `Employee Group ID [${s["Employee Group ID"]}] tidak terdaftar`
+                  : ""
+              } ${
+                !responseemployee
+                  ? `KD Comp ID [${s["KD Comp ID"]}] atau [${s["NPP"]}]  tidak terdaftar untuk row data ini`
+                  : ""
+              }`;
+            }
+          } else if (s["Opsi"] === "Terminate") {
+            const validData =
+              s["NPP"] !== undefined &&
+              s["NPP"] !== null &&
+              s["KD Comp ID"] !== undefined &&
+              s["KD Comp ID"] !== null &&
+              typeof s["KD Comp ID"] === "number";
+            if (validData) {
+              const responseemployee =
+                await repositoryemployee.acquireDataByNppKDComp(
+                  s["NPP"],
+                  s["KD Comp ID"]
+                );
+              const responsemastereployeegroup =
+                await repositoryMasterEmployeeGroup.acquireById(
+                  s["Employee Group ID"]
+                );
+              if (responseemployee && responsemastereployeegroup) {
+                var generateMobility = {
+                  employee_id: responseemployee.id,
+                  no_sk: s["No. SK Jabatan"],
+                  tanggal_sk: moment(
+                    excelSerialNumberToDate(s["Tanggal SK Jabatan"])
+                  ).format("YYYY-MM-DD"),
+                  jenis: "-",
+                  end_date: moment(Date.now()).format("YYYY-MM-DD"),
+                };
+                var responseservicemobility =
+                  await serviceMobility.generatePensiunTerminateData(
+                    generateMobility,
+                    "JM_CLICK",
+                    "terminate",
+                    transaction
+                  );
+                if (responseservicemobility) {
+                  collection["Status"] = "Sukses";
+                  collection[
+                    "Keterangan"
+                  ] = `Data pekerjaan untuk terminate berhasil diproses`;
+                } else {
+                  collection["Status"] = "Gagal";
+                  collection[
+                    "Keterangan"
+                  ] = `Data pekerjaan untuk terminate tidak berhasil diproses`;
+                }
+              } else {
+                collection["Status"] = "Gagal";
+                collection[
+                  "Keterangan"
+                ] = `Data pekerjaan terminate tidak tersimpan karena ${
+                  !responsemastereployeegroup
+                    ? `Employee Group ID [${s["Employee Group ID"]}] tidak terdaftar`
+                    : ""
+                } ${
+                  !responseemployee
+                    ? `KD Comp ID [${s["KD Comp ID"]}] atau [${s["NPP"]}]  tidak terdaftar untuk row data ini`
+                    : ""
+                }`;
+              }
+            } else {
+              collection["Status"] = "Gagal";
+              collection[
+                "Keterangan"
+              ] = `Data pekerjaan tidak tersimpan karena ${
+                !responsemastereployeegroup
+                  ? `Employee Group ID [${s["Employee Group ID"]}] tidak terdaftar`
+                  : ""
+              } ${
+                !responseemployee
+                  ? `KD Comp ID [${s["KD Comp ID"]}] tidak terdaftar`
+                  : ""
+              }`;
+            }
+          } else if (s["Opsi"] === "Rotasi") {
+            const responseemployee =
+              await repositoryemployee.acquireDataByNppKDComp(
+                s["NPP"],
+                s["KD Comp ID"]
+              );
+            const responsemastereployeegroup =
+              await repositoryMasterEmployeeGroup.acquireById(
+                s["Employee Group ID"]
+              );
+            if (responseemployee && responsemastereployeegroup) {
+              var generateMobility = {
+                employee_id: responseemployee.id,
+                no_sk: s["No. SK Jabatan"],
+                tanggal_sk: moment(
+                  excelSerialNumberToDate(s["Tanggal SK Jabatan"])
+                ).format("YYYY-MM-DD"),
+                start_date: moment(
+                  excelSerialNumberToDate(s["Tanggal TMT"])
+                ).format("YYYY-MM-DD"),
+                position_id: parseInt(s["Jabatan ID"]),
+                // 'subgroup_id': ,
+              };
+              var responseservicemobility =
+                await serviceMobility.generatePromosiRotasiDemosiData(
+                  generateMobility,
+                  "JM_CLICK",
+                  "rotasi",
+                  transaction
+                );
+              if (responseservicemobility) {
+                collection["Status"] = "Sukses";
+                collection[
+                  "Keterangan"
+                ] = `Data pekerjaan untuk rotasi berhasil diproses`;
+              } else {
+                collection["Status"] = "Gagal";
+                collection[
+                  "Keterangan"
+                ] = `Data pekerjaan untuk rotasi tidak berhasil diproses`;
+              }
+            } else {
+              collection["Status"] = "Gagal";
+              collection[
+                "Keterangan"
+              ] = `Data pekerjaan rotasi tidak tersimpan karena ${
+                !responsemastereployeegroup
+                  ? `Employee Group ID [${s["Employee Group ID"]}] tidak terdaftar`
+                  : ""
+              } ${
+                !responseemployee
+                  ? `KD Comp ID [${s["KD Comp ID"]}] atau [${s["NPP"]}]  tidak terdaftar`
+                  : ""
+              }`;
+            }
+          } else if (s["Opsi"] === "Promosi") {
+            const responseemployee =
+              await repositoryemployee.acquireDataByNppKDComp(
+                s["NPP"],
+                s["KD Comp ID"]
+              );
+            const responsemastereployeegroup =
+              await repositoryMasterEmployeeGroup.acquireById(
+                s["Employee Group ID"]
+              );
+            if (responseemployee && responsemastereployeegroup) {
+              var generateMobility = {
+                employee_id: responseemployee.id,
+                no_sk: s["No. SK Jabatan"],
+                tanggal_sk: moment(
+                  excelSerialNumberToDate(s["Tanggal SK Jabatan"])
+                ).format("YYYY-MM-DD"),
+                start_date: moment(
+                  excelSerialNumberToDate(s["Tanggal TMT"])
+                ).format("YYYY-MM-DD"),
+                position_id: parseInt(s["Jabatan ID"]),
+                // 'subgroup_id': ,
+              };
+              var responseservicemobility =
+                await serviceMobility.generatePromosiRotasiDemosiData(
+                  generateMobility,
+                  "JM_CLICK",
+                  "promosi",
+                  transaction
+                );
+              if (responseservicemobility) {
+                collection["Status"] = "Sukses";
+                collection[
+                  "Keterangan"
+                ] = `Data pekerjaan untuk promosi berhasil diproses`;
+              } else {
+                collection["Status"] = "Gagal";
+                collection[
+                  "Keterangan"
+                ] = `Data pekerjaan untuk promosi tidak berhasil diproses`;
+              }
+            } else {
+              collection["Status"] = "Gagal";
+              collection[
+                "Keterangan"
+              ] = `Data pekerjaan promosi tidak tersimpan karena ${
+                !responsemastereployeegroup
+                  ? `Employee Group ID [${s["Employee Group ID"]}] tidak terdaftar`
+                  : ""
+              } ${
+                !responseemployee
+                  ? `KD Comp ID [${s["KD Comp ID"]}] atau [${s["NPP"]}]  tidak terdaftar untuk row data ini`
+                  : ""
+              }`;
+            }
+          } else if (s["Opsi"] === "Demosi") {
+            const responseemployee =
+              await repositoryemployee.acquireDataByNppKDComp(
+                s["NPP"],
+                s["KD Comp ID"]
+              );
+            const responsemastereployeegroup =
+              await repositoryMasterEmployeeGroup.acquireById(
+                s["Employee Group ID"]
+              );
+            if (responseemployee && responsemastereployeegroup) {
+              var generateMobility = {
+                employee_id: responseemployee.id,
+                no_sk: s["No. SK Jabatan"],
+                tanggal_sk: moment(
+                  excelSerialNumberToDate(s["Tanggal SK Jabatan"])
+                ).format("YYYY-MM-DD"),
+                start_date: moment(
+                  excelSerialNumberToDate(s["Tanggal TMT"])
+                ).format("YYYY-MM-DD"),
+                position_id: parseInt(s["Jabatan ID"]),
+                // 'subgroup_id': ,
+              };
+              var responseservicemobility =
+                await serviceMobility.generatePromosiRotasiDemosiData(
+                  generateMobility,
+                  "JM_CLICK",
+                  "demosi",
+                  transaction
+                );
+              if (responseservicemobility) {
+                collection["Status"] = "Sukses";
+                collection[
+                  "Keterangan"
+                ] = `Data pekerjaan untuk demosi berhasil diproses`;
+              } else {
+                collection["Status"] = "Gagal";
+                collection[
+                  "Keterangan"
+                ] = `Data pekerjaan untuk demosi tidak berhasil diproses`;
+              }
+            } else {
+              collection["Status"] = "Gagal";
+              collection[
+                "Keterangan"
+              ] = `Data pekerjaan demosi tidak tersimpan karena ${
+                !responsemastereployeegroup
+                  ? `Employee Group ID [${s["Employee Group ID"]}] tidak terdaftar`
+                  : ""
+              } ${
+                !responseemployee
+                  ? `KD Comp ID [${s["KD Comp ID"]}] atau [${s["NPP"]}]  tidak terdaftar untuk row data ini`
+                  : ""
+              }`;
+            }
+          } else if (s["Opsi"] === "Terminate") {
+            const responseemployee =
+              await repositoryemployee.acquireDataByNppKDComp(
+                s["NPP"],
+                s["KD Comp ID"]
+              );
+            const responsemastereployeegroup =
+              await repositoryMasterEmployeeGroup.acquireById(
+                s["Employee Group ID"]
+              );
+            if (responseemployee && responsemastereployeegroup) {
+              var generateMobility = {
+                employee_id: responseemployee.id,
+                no_sk: s["No. SK Jabatan"],
+                tanggal_sk: moment(
+                  excelSerialNumberToDate(s["Tanggal SK Jabatan"])
+                ).format("YYYY-MM-DD"),
+                jenis: "-",
+                end_date: moment(Date.now()).format("YYYY-MM-DD"),
+              };
+              var responseservicemobility =
+                await serviceMobility.generatePensiunTerminateData(
+                  generateMobility,
+                  "JM_CLICK",
+                  "terminate",
+                  transaction
+                );
+              if (responseservicemobility) {
+                collection["Status"] = "Sukses";
+                collection[
+                  "Keterangan"
+                ] = `Data pekerjaan untuk terminate berhasil diproses`;
+              } else {
+                collection["Status"] = "Gagal";
+                collection[
+                  "Keterangan"
+                ] = `Data pekerjaan untuk terminate tidak berhasil diproses`;
+              }
+            } else {
+              collection["Status"] = "Gagal";
+              collection[
+                "Keterangan"
+              ] = `Data pekerjaan terminate tidak tersimpan karena ${
+                !responsemastereployeegroup
+                  ? `Employee Group ID [${s["Employee Group ID"]}] tidak terdaftar`
+                  : ""
+              } ${
+                !responseemployee
+                  ? `KD Comp ID [${s["KD Comp ID"]}] atau [${s["NPP"]}]  tidak terdaftar untuk row data ini`
+                  : ""
+              }`;
+            }
+          } else if (s["Opsi"] === "Pensiun") {
+            const responseemployee =
+              await repositoryemployee.acquireDataByNppKDComp(
+                s["NPP"],
+                s["KD Comp ID"]
+              );
+            const responsemastereployeegroup =
+              await repositoryMasterEmployeeGroup.acquireById(
+                s["Employee Group ID"]
+              );
+            if (responseemployee && responsemastereployeegroup) {
+              var generateMobility = {
+                employee_id: responseemployee.id,
+                no_sk: s["No. SK Jabatan"],
+                tanggal_sk: moment(
+                  excelSerialNumberToDate(s["Tanggal SK Jabatan"])
+                ).format("YYYY-MM-DD"),
+                jenis: "-",
+                end_date: moment(Date.now()).format("YYYY-MM-DD"),
+              };
+              var responseservicemobility =
+                await serviceMobility.generatePensiunTerminateData(
+                  generateMobility,
+                  "JM_CLICK",
+                  "pensiun",
+                  transaction
+                );
+              if (responseservicemobility) {
+                collection["Status"] = "Sukses";
+                collection[
+                  "Keterangan"
+                ] = `Data pekerjaan untuk pensiun berhasil diproses`;
+              } else {
+                collection["Status"] = "Gagal";
+                collection[
+                  "Keterangan"
+                ] = `Data pekerjaan untuk pensiun tidak berhasil diproses`;
+              }
+            } else {
+              collection["Status"] = "Gagal";
+              collection[
+                "Keterangan"
+              ] = `Data pekerjaan pensiun tidak tersimpan karena ${
+                !responsemastereployeegroup
+                  ? `Employee Group ID [${s["Employee Group ID"]}] tidak terdaftar`
+                  : ""
+              } ${
+                !responseemployee
+                  ? `KD Comp ID [${s["KD Comp ID"]}] atau [${s["NPP"]}]  tidak terdaftar untuk row data ini`
+                  : ""
+              }`;
+            }
+          } else {
+            collection["Status"] = "Gagal";
+            collection["Keterangan"] = `Tidak ada opsi`;
+          }
+        }
+      } else {
+        collection["Status"] = "Gagal";
+        collection["Keterangan"] = `Jabatan ID tidak sesuai dengan KD Comp ID`;
+      }
+    } else {
+      collection["Status"] = "Gagal";
+      collection["Keterangan"] = `Data pekerjaan tidak tersimpan karena ${
+        !repomasteremployeegroup
+          ? `Employee Group ID [${s["Employee Group ID"]}] tidak terdaftar`
+          : ""
+      } ${
+        !repomastercompany
+          ? `KD Comp ID [${s["KD Comp ID"]}] tidak terdaftar`
+          : ""
+      } ${
+        !repomasterposition
+          ? `KD Comp ID [${s["Jabatan ID"]}] tidak terdaftar`
+          : ""
+      }`;
+    }
+  }
+  return collection;
+};

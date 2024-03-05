@@ -1,0 +1,17 @@
+  PORT= '8080'
+
+  NODE_ENV= public
+  DB_DIALECT= postgres
+  DB_HOST= 10.1.12.30
+  DB_NAME= data_aggregator_2
+  DB_USERNAME= aggregator
+  DB_PASSWORD= mypass
+
+  SAP_USER= equine04
+  SAP_URL= 'http://erpappprd.jasamarga.co.id:8001/sap/h2h/hcm/?sap-client=120'
+  SAP_PASSWORD= Welcome.123
+  
+  DISCORD_CHANNEL_ID= '1187669236303274024'
+  DISCORD_BOT_TOKEN= MTE5NDA0MzgzODcwNTE4MDc1Mw.GzVwPY.NW1aM66fCsgBRYpMgXa2f0b70SMC4VvMbN6v_0
+  API_KEY= 0fafe9fb-aa76-4297-92cd-b8604ea6b592
+  API_URL= 'https=//api-karyawan.jasamarga.co.id'

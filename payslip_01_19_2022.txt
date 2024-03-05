@@ -1,0 +1,18 @@
+--update payslip_3
+--set
+--kd_comp = 1
+--from (
+--select * from employee e where e.company_id_asal = 1
+--) employees
+--where employees.npp = payslip_3.npp
+
+--update payslip_3 
+--set
+--type = 'regular'
+--where
+--gaji_pokok_utuh != '0'
+
+
+--select * from payslip_3 p where p.gaji_pokok_utuh = '0'
+
+select e.npp , e."name" , p.gaji_pokok  from employee e join payslip_3 p on e.id=p.employee_id  where p.periode = '202212' 

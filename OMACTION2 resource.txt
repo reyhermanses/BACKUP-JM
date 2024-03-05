@@ -1,0 +1,5 @@
+organisasi_key => org_hierarchy
+position_key => master_position
+job_key => master_job (id)
+section => org_hierarchy
+departement => org_hierarchy

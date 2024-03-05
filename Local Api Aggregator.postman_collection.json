@@ -1,0 +1,846 @@
+{
+	"info": {
+		"_postman_id": "99026161-13d4-4cb5-a46b-84e23fb367ff",
+		"name": "Local Api Aggregator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8750643"
+	},
+	"item": [
+		{
+			"name": "Employee All",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "API Create Karyawan Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "NAME",
+							"value": "Test Api Create 2",
+							"type": "text"
+						},
+						{
+							"key": "IS_PUSAT",
+							"value": "1",
+							"description": "1 / 0",
+							"type": "text"
+						},
+						{
+							"key": "NATIONAL_IDENTIFIER",
+							"value": "1234567890123455",
+							"type": "text"
+						},
+						{
+							"key": "PLACE_OF_BIRTH",
+							"value": "Bandung",
+							"type": "text"
+						},
+						{
+							"key": "DATE_OF_BIRTH",
+							"value": "1999-01-01",
+							"description": "Format Tanggal => YYYY-MM-DD",
+							"type": "text"
+						},
+						{
+							"key": "GENDER",
+							"value": "Male",
+							"description": "Male / Female",
+							"type": "text"
+						},
+						{
+							"key": "NPP",
+							"value": "888898",
+							"type": "text"
+						},
+						{
+							"key": "NEW_NPP",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "ADDRESS_KTP",
+							"value": "Bandung",
+							"type": "text"
+						},
+						{
+							"key": "CITY_KTP",
+							"value": "Bandung",
+							"type": "text"
+						},
+						{
+							"key": "PROVINCE_KTP",
+							"value": "Bandung",
+							"type": "text"
+						},
+						{
+							"key": "ADDRESS_DOMICILE",
+							"value": "Pamokolan",
+							"type": "text"
+						},
+						{
+							"key": "FRONT_TITLE_EDUCATION",
+							"value": "Alm",
+							"type": "text"
+						},
+						{
+							"key": "END_TITLE_EDUCATION",
+							"value": "Spbu",
+							"type": "text"
+						},
+						{
+							"key": "RELIGION",
+							"value": "Islam",
+							"description": "Islam / Hindu / Budha / Atheis / Katolik / Kristen / Agnostik",
+							"type": "text"
+						},
+						{
+							"key": "MARITAL_STATUS",
+							"value": "Lajang",
+							"description": "Lajang / Menikah / Janda / Duda",
+							"type": "text"
+						},
+						{
+							"key": "NPWP",
+							"value": "321738213213123",
+							"type": "text"
+						},
+						{
+							"key": "STATUS_NPWP",
+							"value": "Aktif",
+							"type": "text"
+						},
+						{
+							"key": "BLOOD_TYPE",
+							"value": "E",
+							"type": "text"
+						},
+						{
+							"key": "HEIGHT",
+							"value": "180",
+							"type": "text"
+						},
+						{
+							"key": "WEIGHT",
+							"value": "60",
+							"type": "text"
+						},
+						{
+							"key": "TELEPHONE_NO",
+							"value": "0126357123",
+							"type": "text"
+						},
+						{
+							"key": "EMAIL",
+							"value": "test@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "BPJS_KES_NO",
+							"value": "1203721321312312321",
+							"type": "text"
+						},
+						{
+							"key": "BPJS_KET_NO",
+							"value": "3612312731232132131",
+							"type": "text"
+						},
+						{
+							"key": "DATE_OF_ENTRY",
+							"value": "2022-01-01",
+							"description": "Format Tanggal => YYYY-MM-DD",
+							"type": "text"
+						},
+						{
+							"key": "EMPLOYEE_GROUP",
+							"value": "PKWT",
+							"type": "text"
+						},
+						{
+							"key": "IS_RANGKAP_JABATAN",
+							"value": "0",
+							"description": "1 / 0",
+							"type": "text"
+						},
+						{
+							"key": "IS_PENUGASAN",
+							"value": "0",
+							"description": "1 / 0",
+							"type": "text"
+						},
+						{
+							"key": "SK_PHK_NO",
+							"value": "395EA.P-15A2018",
+							"type": "text"
+						},
+						{
+							"key": "SK_PHK_DATE",
+							"value": "2022-01-01",
+							"description": "Format Tanggal => YYYY-MM-DD",
+							"type": "text"
+						},
+						{
+							"key": "SK_PHK_OUT_DATE",
+							"value": "2022-01-01",
+							"description": "Format Tanggal => YYYY-MM-DD",
+							"type": "text"
+						},
+						{
+							"key": "REF_PHK_ID",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "KET_PHK",
+							"value": "395EA.P-15A2018",
+							"type": "text"
+						},
+						{
+							"key": "JOB_FUNCTION",
+							"value": "Struktural",
+							"type": "text"
+						},
+						{
+							"key": "EMPLOYEE_STATUS",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "PASPOR_NO",
+							"value": "1123",
+							"type": "text"
+						},
+						{
+							"key": "UNIT_KERJA",
+							"value": "Program and Portfolio Sect.",
+							"type": "text"
+						},
+						{
+							"key": "PERSONNEL_NUMBER",
+							"value": "000057811",
+							"type": "text"
+						},
+						{
+							"key": "KD_COMP",
+							"value": "JSMR",
+							"type": "text"
+						},
+						{
+							"key": "EMPLOYEE_SUBGROUP",
+							"value": "Apprentices",
+							"type": "text"
+						},
+						{
+							"key": "ATTACH_NPWP",
+							"type": "file",
+							"src": "/D:/Tutorial install vps.txt"
+						},
+						{
+							"key": "ATTACH_BUKU_NIKAH",
+							"type": "file",
+							"src": "/D:/Tutorial install vps.txt"
+						},
+						{
+							"key": "ATTACH_BPJS_KET",
+							"type": "file",
+							"src": "/D:/Tutorial install vps.txt"
+						},
+						{
+							"key": "ATTACH_BPJS_KES",
+							"type": "file",
+							"src": "/D:/Tutorial install vps.txt"
+						},
+						{
+							"key": "ATTACH_DANA_PENSIUN",
+							"type": "file",
+							"src": "/D:/Tutorial install vps.txt"
+						},
+						{
+							"key": "ATTACH_KTP",
+							"type": "file",
+							"src": "/D:/TUTORIAL/web-design/admin-panel/PurpleAdmin-Free-Admin-Template/assets/images/faces/face2.jpg"
+						},
+						{
+							"key": "ATTACH_KK",
+							"type": "file",
+							"src": "/D:/TUTORIAL/web-design/admin-panel/PurpleAdmin-Free-Admin-Template/assets/images/faces/face1.jpg"
+						},
+						{
+							"key": "RT",
+							"value": "01",
+							"type": "text"
+						},
+						{
+							"key": "RW",
+							"value": "02",
+							"type": "text"
+						},
+						{
+							"key": "KD_POS",
+							"value": "14045",
+							"type": "text"
+						},
+						{
+							"key": "EMAIL_PRIBADI",
+							"value": "check@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "PROVINCE_DOMICILE",
+							"value": "Jawa Barat",
+							"type": "text"
+						},
+						{
+							"key": "CITY_DOMICILE",
+							"value": "Bandung",
+							"type": "text"
+						},
+						{
+							"key": "ADDRESS_DOMICILE",
+							"value": "Bandung Pertigaan",
+							"type": "text"
+						},
+						{
+							"key": "RW_DOMICILE",
+							"value": "01",
+							"type": "text"
+						},
+						{
+							"key": "RT_DOMICILE",
+							"value": "02",
+							"type": "text"
+						},
+						{
+							"key": "KD_POS_DOMICILE",
+							"value": "02",
+							"type": "text"
+						},
+						{
+							"key": "IS_HISTORY",
+							"value": "41000040",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "SK_POSITION_NO",
+							"value": "03984/Temp/1994",
+							"type": "text"
+						},
+						{
+							"key": "SK_POSITION_DATE",
+							"value": "2011-07-08",
+							"type": "text"
+						},
+						{
+							"key": "START_DATE",
+							"value": "2011-07-16",
+							"type": "text"
+						},
+						{
+							"key": "END_DATE",
+							"value": "9999-12-31",
+							"type": "text"
+						},
+						{
+							"key": "POSITION_ID",
+							"value": "12630",
+							"type": "text"
+						},
+						{
+							"key": "ATASAN_ID",
+							"value": "128261",
+							"type": "text"
+						},
+						{
+							"key": "ATASAN_POSITION_ID",
+							"value": "160810",
+							"type": "text"
+						},
+						{
+							"key": "COMPANY_ID_ASAL",
+							"value": "13",
+							"type": "text"
+						},
+						{
+							"key": "BIDANG_ID",
+							"value": "152",
+							"type": "text"
+						},
+						{
+							"key": "KELOMPOK_JABATAN",
+							"value": "Operasional",
+							"type": "text"
+						},
+						{
+							"key": "GRADE",
+							"value": "BOD-4",
+							"type": "text"
+						},
+						{
+							"key": "SUB_GRADE",
+							"value": "BOD-4",
+							"type": "text"
+						},
+						{
+							"key": "MUTASI_ID",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "KET_MUTASI",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "LAYER_ID",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "KODE_STATUS_GAJI",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "ACTIVE",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "CREATED_BY",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "JOB_ID",
+							"value": "20000003",
+							"type": "text"
+						},
+						{
+							"key": "EMPLOYEE_GROUP_ID",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "SAP_EMP_STATUS",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "COMPANY_ID_PENUGASAN",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "LOCATION_ID",
+							"value": "2020",
+							"type": "text"
+						},
+						{
+							"key": "BUSINESS_AREA_ID",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "POSITION",
+							"value": "Kepala Shift Layanan Jalan Tol",
+							"type": "text"
+						},
+						{
+							"key": "ORGANIZATION",
+							"value": "PT Marga Lingkar Jakarta",
+							"type": "text"
+						},
+						{
+							"key": "DEPARTEMEN_ID",
+							"value": "90567332",
+							"type": "text"
+						},
+						{
+							"key": "DEPARTEMEN",
+							"value": "Toll Collection Management",
+							"type": "text"
+						},
+						{
+							"key": "SECTION_ID",
+							"value": "90000603",
+							"type": "text"
+						},
+						{
+							"key": "SECTION",
+							"value": "Toll Collection Management",
+							"type": "text"
+						},
+						{
+							"key": "ACTION",
+							"value": "Promosi",
+							"type": "text"
+						},
+						{
+							"key": "ATASAN_AP_ID",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "ATASAN_AP_POSITION_ID",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "PERSONAL_AREA",
+							"value": "3000",
+							"type": "text"
+						},
+						{
+							"key": "ORG_ID",
+							"value": "40000873",
+							"type": "text"
+						},
+						{
+							"key": "EMPLOYEE_SUBGROUP_ID",
+							"value": "428",
+							"type": "text"
+						},
+						{
+							"key": "PERSONAL_SUB_AREA",
+							"value": "3380",
+							"type": "text"
+						},
+						{
+							"key": "COST_CENTER",
+							"value": "Employee Services",
+							"type": "text"
+						},
+						{
+							"key": "DIREKTORAT",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "MK_UNIT",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "MK_GRADE",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "LEVEL",
+							"value": "A",
+							"type": "text"
+						},
+						{
+							"key": "KONVERSI",
+							"value": "BOD-5",
+							"type": "text"
+						},
+						{
+							"key": "IS_HISTORY",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/api/employees",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"employees"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "API Create Karyawan",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "NAME",
+									"value": "Test Api Create",
+									"type": "text"
+								},
+								{
+									"key": "IS_PUSAT",
+									"value": "1",
+									"description": "1 / 0",
+									"type": "text"
+								},
+								{
+									"key": "NATIONAL_IDENTIFIER",
+									"value": "21903812121222",
+									"type": "text"
+								},
+								{
+									"key": "PLACE_OF_BIRTH",
+									"value": "Bandung",
+									"type": "text"
+								},
+								{
+									"key": "DATE_OF_BIRTH",
+									"value": "1999-01-01",
+									"description": "Format Tanggal => YYYY-MM-DD",
+									"type": "text"
+								},
+								{
+									"key": "GENDER",
+									"value": "Male",
+									"description": "Male / Female",
+									"type": "text"
+								},
+								{
+									"key": "NPP",
+									"value": "1200",
+									"type": "text"
+								},
+								{
+									"key": "NEW_NPP",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "ADDRESS_KTP",
+									"value": "Bandung",
+									"type": "text"
+								},
+								{
+									"key": "CITY_KTP",
+									"value": "Bandung",
+									"type": "text"
+								},
+								{
+									"key": "PROVINCE_KTP",
+									"value": "Bandung",
+									"type": "text"
+								},
+								{
+									"key": "ADDRESS_DOMICILE",
+									"value": "Pamokolan",
+									"type": "text"
+								},
+								{
+									"key": "FRONT_TITLE_EDUCATION",
+									"value": "Alm",
+									"type": "text"
+								},
+								{
+									"key": "END_TITLE_EDUCATION",
+									"value": "Spbu",
+									"type": "text"
+								},
+								{
+									"key": "RELIGION",
+									"value": "Islam",
+									"description": "Islam / Hindu / Budha / Atheis / Katolik / Kristen / Agnostik",
+									"type": "text"
+								},
+								{
+									"key": "MARITAL_STATUS",
+									"value": "Lajang",
+									"description": "Lajang / Menikah / Janda / Duda",
+									"type": "text"
+								},
+								{
+									"key": "NPWP",
+									"value": "321738213213123",
+									"type": "text"
+								},
+								{
+									"key": "STATUS_NPWP",
+									"value": "Aktif",
+									"type": "text"
+								},
+								{
+									"key": "BLOOD_TYPE",
+									"value": "E",
+									"type": "text"
+								},
+								{
+									"key": "HEIGHT",
+									"value": "180",
+									"type": "text"
+								},
+								{
+									"key": "WEIGHT",
+									"value": "60",
+									"type": "text"
+								},
+								{
+									"key": "TELEPHONE_NO",
+									"value": "0126357123",
+									"type": "text"
+								},
+								{
+									"key": "EMAIL",
+									"value": "test@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "BPJS_KES_NO",
+									"value": "1203721321312312321",
+									"type": "text"
+								},
+								{
+									"key": "BPJS_KET_NO",
+									"value": "3612312731232132131",
+									"type": "text"
+								},
+								{
+									"key": "DATE_OF_ENTRY",
+									"value": "2022-01-01",
+									"description": "Format Tanggal => YYYY-MM-DD",
+									"type": "text"
+								},
+								{
+									"key": "EMPLOYEE_GROUP",
+									"value": "PKWT",
+									"type": "text"
+								},
+								{
+									"key": "IS_RANGKAP_JABATAN",
+									"value": "0",
+									"description": "1 / 0",
+									"type": "text"
+								},
+								{
+									"key": "IS_PENUGASAN",
+									"value": "0",
+									"description": "1 / 0",
+									"type": "text"
+								},
+								{
+									"key": "SK_PHK_NO",
+									"value": "395EA.P-15A2018",
+									"type": "text"
+								},
+								{
+									"key": "SK_PHK_DATE",
+									"value": "2022-01-01",
+									"description": "Format Tanggal => YYYY-MM-DD",
+									"type": "text"
+								},
+								{
+									"key": "SK_PHK_OUT_DATE",
+									"value": "2022-01-01",
+									"description": "Format Tanggal => YYYY-MM-DD",
+									"type": "text"
+								},
+								{
+									"key": "REF_PHK_ID",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "KET_PHK",
+									"value": "395EA.P-15A2018",
+									"type": "text"
+								},
+								{
+									"key": "JOB_FUNCTION",
+									"value": "Struktural",
+									"type": "text"
+								},
+								{
+									"key": "EMPLOYEE_STATUS",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "PASPOR_NO",
+									"value": "1123",
+									"type": "text"
+								},
+								{
+									"key": "UNIT_KERJA",
+									"value": "Program and Portfolio Sect.",
+									"type": "text"
+								},
+								{
+									"key": "PERSONNEL_NUMBER",
+									"value": "1200",
+									"type": "text"
+								},
+								{
+									"key": "KD_COMP",
+									"value": "TEST",
+									"type": "text"
+								},
+								{
+									"key": "EMPLOYEE_SUBGROUP",
+									"value": "Apprentices",
+									"type": "text"
+								},
+								{
+									"key": "ATTACH_NPWP",
+									"type": "file",
+									"src": "/C:/Users/OPSMII07/Downloads/JASAMARGA.txt"
+								},
+								{
+									"key": "ATTACH_BUKU_NIKAH",
+									"type": "file",
+									"src": "/C:/Users/OPSMII07/Downloads/JASAMARGA.txt"
+								},
+								{
+									"key": "ATTACH_BPJS_KET",
+									"type": "file",
+									"src": "/C:/Users/OPSMII07/Downloads/JASAMARGA.txt"
+								},
+								{
+									"key": "ATTACH_BPJS_KES",
+									"type": "file",
+									"src": "/C:/Users/OPSMII07/Downloads/JASAMARGA.txt"
+								},
+								{
+									"key": "ATTACH_DANA_PENSIUN",
+									"type": "file",
+									"src": "/C:/Users/OPSMII07/Downloads/JASAMARGA.txt"
+								},
+								{
+									"key": "ATTACH_KTP",
+									"type": "file",
+									"src": "/C:/Users/OPSMII07/Downloads/Screenshot_1.png"
+								},
+								{
+									"key": "ATTACH_KK",
+									"type": "file",
+									"src": "/C:/Users/OPSMII07/Downloads/Screenshot_1.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseurl}}/api/employees",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"api",
+								"employees"
+							]
+						}
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		}
+	]
+}

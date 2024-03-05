@@ -1,0 +1,13 @@
+karkteristik jemaat di katakan berkeluarga
+
+ - marital status = married
+ - sebelum di datakan ke table keluarga jemaat, pasangan harus di buat terlebih dahulu
+ - marital status ini hanya bisa di gantikan oleh admin / tata usaha gereja / orang yang berwenang
+ - hanya bisa menambahkan anak, pasangan suami/istri, meminta untuk perubahan status ke janda, duda, atau menikah lagi
+ - pembuatan data baru/ pembaharuan marital status jemaat yang sudah terdaftar married tidak bisa dilakukan jika syarat perubahan data
+belum terpenuhi
+ - data ini dibutuhkan bahkan jika pasangan sudah cerai berpuluh2 tahun tetap harus di daftarkan, agar silsilah
+keluarga tetap terdata.
+
+
+react leaflet / map next js

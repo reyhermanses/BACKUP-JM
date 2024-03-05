@@ -1,0 +1,8 @@
+Password123!
+
+
+
+pull openshift
+
+user : adib.bachtiar
+pass : password

@@ -1,0 +1,31 @@
+stateForm
+-Registration
+-Update
+-UpdateAdmin
+
+create image :
+sudo docker build -t tkw .
+
+run container : 
+sudo docker run --name backend-tkw -p 81:8585 -d tkw
+sudo docker run -p 81:8585 -d tkw
+
+masuk ke dalam container :
+sudo exect -it id_docker sh
+
+check node js logs :
+sudo docker logs nama_container
+
+
+git use https
+git remote set-url origin https://github.com/reyhermanses/frontend-tkw.git
+
+
+
+login github
+username : rey
+password : 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
+
+
+visudo
+set new user have root priveleges
