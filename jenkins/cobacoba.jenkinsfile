@@ -1,0 +1,58 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/reyhermanses/idr.center'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t cobacoba .'
+            }
+        }
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    def registryUrl = 'reyhermanses/cobacoba'
+                    def imageName = 'cobacoba'
+                    def imageTag = 'latest' // You can use a specific tag if needed
+        
+                    // Login to the Docker registry
+                    docker.withRegistry(registryUrl) {
+                        // Tag the Docker image
+                        docker.image(imageName).tag("${registryUrl}/${imageName}:${imageTag}")
+        
+                        // Push the Docker image to the registry
+                        docker.image("${registryUrl}/${imageName}:${imageTag}").push()
+                    }
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                // Add your deployment steps here
+                script {
+                    // SSH into the target server
+                    sshagent(['05260818-6924-4305-847b-17fcd22ce369']) {
+                        sh 'ssh reyamsterdam@203.175.11.160 "mkdir -p /path/to/deployment"'
+                        sh 'scp docker-compose.yml reyamsterdam@203.175.11.160:/path/to/deployment'
+                        // Copy your Docker Compose file to the target server
+                    }
+                    
+                    // SSH into the target server and start Docker Compose
+                    sshagent(['your_ssh_credentials']) {
+                        sh 'ssh user@your_server "cd /path/to/deployment && docker-compose pull"'
+                        sh 'ssh user@your_server "cd /path/to/deployment && docker-compose up -d"'
+                    }
+                }
+            }
+        }
+    }
+}
