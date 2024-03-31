@@ -40,7 +40,7 @@ pipeline {
                 // Add your deployment steps here
                 script {
                     // SSH into the target server
-                    sshagent(['05260818-6924-4305-847b-17fcd22ce369']) {
+                    withCredentials([usernamePassword(credentialsId: 'your-credentials-id', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         sh 'ssh reyamsterdam@203.175.11.160 "mkdir -p /path/to/deployment"'
                         sh 'scp docker-compose.yml reyamsterdam@203.175.11.160:/path/to/deployment'
                         // Copy your Docker Compose file to the target server
