@@ -1,0 +1,22 @@
+# Deployment Configuration (Not for Kubernetes)
+# You may have a script or other method to deploy your application directly on the VPS.
+# Below is an example of how you might deploy using a shell script.
+
+#!/bin/bash
+
+# Define environment variables
+export PORT=8181
+export DB_NAME=my_database
+export DB_HOST=my_database_host
+export IMAGE_DEPLOY=my_application_image
+
+# Pull the latest Docker image
+docker pull $IMAGE_DEPLOY
+
+# Run the Docker container with environment variables
+docker run -d \
+    -e PORT=$PORT \
+    -e DB_NAME=$DB_NAME \
+    -e DB_HOST=$DB_HOST \
+    -p $PORT:$PORT \
+    $IMAGE_DEPLOY
