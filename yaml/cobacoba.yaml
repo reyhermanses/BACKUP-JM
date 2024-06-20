@@ -5,10 +5,10 @@
 #!/bin/bash
 
 # Define environment variables
-export PORT=8181
+export PORT=8000
 export DB_NAME=my_database
 export DB_HOST=my_database_host
-export IMAGE_DEPLOY=my_application_image
+export IMAGE_DEPLOY=cobacoba
 
 # Pull the latest Docker image
 docker pull $IMAGE_DEPLOY
